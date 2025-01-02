@@ -1,7 +1,11 @@
 from flask import Flask, request, jsonify
 from cryptography.fernet import Fernet
+from flask_cors import CORS
+
 
 app = Flask(__name__)
+CORS(app, origins=["https://*.lightning.force.com", "https://*.force.com"])
+
 
 @app.route('/decrypt', methods=['POST'])
 def decrypt_payload():
@@ -23,6 +27,5 @@ def decrypt_payload():
         return jsonify({'decrypted_payload': decrypted_data}), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
-
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__== '__main__':
+    app.run(debug=True, host='0.0.0.0', port=5000)
